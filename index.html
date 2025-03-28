@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        #gameContainer {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            margin: auto;
+            overflow: hidden;
+            border: 2px solid white;
+            background: url("road.png");
+            background-size: 100% auto;
+            background-position: center top; /* Căn giữa ảnh theo chiều ngang, bắt đầu từ trên cùng */
+            background-repeat: repeat-y;
+            animation: none;
+            /*animation: roadmove 1s infinite linear;*/
+        }
+        @keyframes roadmove {
+            0% { background-position: 0 0; }  /* Ảnh nền bắt đầu ở vị trí (0,0) */
+            100% { background-position: 0 100%; }  /* Ảnh nền di chuyển xuống (0,100vh) */
+        }
+        .car-image {
+            position: absolute;
+            width: 50px;
+            height: 100px;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            object-fit: contain;
+        }
+        .obstacle-image {
+            position: absolute;
+            width: 50px;
+            height: 100px;
+            object-fit: contain;
+        }
+        #start {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Lái Xe</h1>
+    <p>Score: <span id="score">0</span></p>
+    <button id="start">Bắt Đầu</button>
+    <div id="gameContainer">
+        <img id="car" class="car-image" src="car1.png">
+    </div>
+    <script src="gamelaixe.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
