@@ -13,6 +13,21 @@ class Gamelaixe {
         this.gameRunning = false; // Biến kiểm tra trạng thái trò chơi
 
         this.initEventListeners(); // Gọi hàm khởi tạo lắng nghe sự kiện
+        this.initSounds(); // Khởi tạo âm thanh
+    }
+
+    // Khởi tạo âm thanh
+    initSounds() {
+        this.engineSound = new Howl({
+            src: ['https://assets.codepen.io/21542/howler-demo-bg-music.mp3'],
+            loop: true,
+            volume: 0.6
+        });
+
+        this.crashSound = new Howl({
+            src: ['lose.mp3'],
+            volume: 1.0
+        });
     }
 
     // Khởi tạo lắng nghe sự kiện
@@ -44,6 +59,7 @@ class Gamelaixe {
         this.carY = this.gameContainer.clientHeight - this.car.clientHeight - 10;
         this.updateCarPosition();
 
+        this.engineSound.play(); // Bắt đầu phát âm thanh động cơ
         requestAnimationFrame(() => this.update());
     }
 
@@ -156,6 +172,8 @@ class Gamelaixe {
     // Kết thúc trò chơi
     endGame() {
         this.gameRunning = false;
+        this.engineSound.stop(); // Dừng âm thanh động cơ
+        this.crashSound.play(); // Phát âm thanh va chạm
 
         // Hiển thị thông báo game over và điểm số
         alert("Game Over! Score: " + this.score);
