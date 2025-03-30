@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url("trangchu2.jpg");
+            background-size: 100% auto;
+            font-family: "Press Start 2P", cursive;
+        }
+
+        @property --a {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+
+        .box {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            background: repeating-conic-gradient(
+                    from var(--a),
+                    #ff2770 0%,
+                    #ff2770 5%,
+                    transparent 5%,
+                    transparent 40%,
+                    #ff2770 50%
+            );
+            filter: drop-shadow(0 15px 50px #000);
+            border-radius: 20px;
+            animation: rotating 4s linear infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s;
+        }
+
+        @keyframes rotating {
+            0% {
+                --a: 0deg;
+            }
+
+            0% {
+                --a: 360deg;
+            }
+        }
+
+        .box::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-conic-gradient(
+                    from var(--a),
+                    #45f3ff 0%,
+                    #45f3ff 5%,
+                    transparent 5%,
+                    transparent 40%,
+                    #45f3ff 50%
+            );
+            filter: drop-shadow(0 15px 50px #000);
+            border-radius: 20px;
+            animation: rotating 4s linear infinite;
+            animation-delay: -1s;
+        }
+
+        .box::after {
+            content: "";
+            position: absolute;
+            inset: 4px;
+            background: #2d2d39;
+            border-radius: 15px;
+            border: 8px solid #25252b;
+        }
+
+        .box:hover {
+            width: 450px;
+            height: 400px;
+        }
+
+        .form {
+            position: absolute;
+            inset: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 10px;
+            background: #00000033;
+            color: #fff;
+            z-index: 1000;
+            box-shadow: inset 0 10px 20px #00000080;
+            border-bottom: 2px solid #ffffff80;
+            transition: 0.5s;
+            overflow: hidden;
+        }
+
+        .form::before {
+            content: "RACING GAME";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 26px;
+            font-weight: bold;
+            color: #f41717;
+            text-shadow: 0 0 10px #f41717, 0 0 20px #f41717;
+            animation: glow 1.5s infinite alternate;
+            transition: top 0.5s ease, transform 0.5s ease;
+            white-space: nowrap; /* Giữ chữ trên một dòng */
+            text-align: center;
+            width: max-content; /* Đảm bảo phần tử đủ rộng */
+        }
+
+        /* Khi hover vào .box, chữ di chuyển lên trên */
+        .box:hover .form::before {
+            top: 20px;
+            font-size: 18px;
+            transform: translateX(-50%);
+        }
+
+
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #f41717;
+            }
+            100% {
+                text-shadow: 0 0 15px #f41717;
+            }
+        }
+
+        /* Mặc định ẩn nội dung bên trong */
+        .formBx {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            width: 70%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* Khi hover vào .box, nội dung xuất hiện */
+        .box:hover .formBx {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mode-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            padding-top: 30px;
+        }
+
+        .mode-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: transparent;
+            border: 2px solid #45f3ff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            background: #45f3ff;
+            color: #111;
+            box-shadow: 0 0 10px #45f3ff;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 20px;
+            outline: none;
+            border: none;
+            font-size: 1em;
+            color: #fff;
+            background: #0000001a;
+            border-radius: 30px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px 20px; /* Tăng padding */
+            font-size: 1.2em; /* Tăng kích thước chữ */
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff2770, #f41717); /* Hiệu ứng gradient */
+            border: none;
+            border-radius: 40px; /* Bo góc nhiều hơn */
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase; /* Viết hoa chữ */
+            box-shadow: 0 0 15px #ff2770, 0 0 25px #f41717; /* Phát sáng */
+        }
+
+        input[type="submit"]:hover {
+            box-shadow: 0 0 20px #ff2770, 0 0 40px #f41717;
+            transform: scale(1.05); /* Tăng nhẹ kích thước khi hover */
+        }
+        .musicOnOff {
+            width: 50%;
+            margin-top: 5px;
+            padding: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #45f3ff;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="form">
+        <div class="formBx">
+            <div class="mode-selection">
+                <button class="mode-btn" data-mode="easy">Dễ</button>
+                <button class="mode-btn" data-mode="medium">Trung Bình</button>
+                <button class="mode-btn" data-mode="hard">Khó</button>
+            </div>
+            <input type="submit" id="start" value="Bắt Đầu" />
+<!--            <button class="musicOnOff"><i class="fa-solid fa-volume-high"></i> Bật âm thanh</button>-->
+            <button class="musicOnOff"><i class="fa-solid fa-volume-xmark"></i> Tắt âm thanh</button>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+<script src="audioManager.js"></script>
+<script>
+
+var buttons = document.getElementsByClassName("mode-btn");
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = function() {
+            for (var j = 0; j < buttons.length; j++) {
+                buttons[j].classList.remove("active");
+            }
+            this.classList.add("active");
+        };
+    }
+</script>
+</body>
+</html>

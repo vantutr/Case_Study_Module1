@@ -19,7 +19,8 @@ class Gamelaixe {
     // Khởi tạo âm thanh
     initSounds() {
         this.engineSound = new Howl({
-            src: ['https://assets.codepen.io/21542/howler-demo-bg-music.mp3'],
+            // src: ['https://assets.codepen.io/21542/howler-demo-bg-music.mp3'],
+            src: ['music.mp3'],
             loop: true,
             volume: 0.6
         });
