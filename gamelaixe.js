@@ -110,13 +110,13 @@ class Gamelaixe {
             }
 
             if (positionValid) {
-                let obs = document.createElement("img");
-                obs.src = "img.png";
-                obs.className = "obstacle-image";
-                obs.style.left = newLeft + "px";
-                obs.style.top = "0px";
-                this.gameContainer.appendChild(obs);
-                this.obstacles.push(obs);
+                let obs = document.createElement("img"); // Tạo phần tử <img>
+                obs.src = "img.png"; // Đặt hình ảnh cho vật cản
+                obs.className = "obstacle-image"; // Thêm class để CSS có thể định dạng
+                obs.style.left = newLeft + "px"; // Đặt vị trí ngang (left)
+                obs.style.top = "0px"; // Đặt vị trí dọc (bắt đầu từ trên cùng)
+                this.gameContainer.appendChild(obs); // Thêm vào màn chơi
+                this.obstacles.push(obs); // Lưu vật cản vào danh sách để quản lý
             }
         }
     }
@@ -155,7 +155,7 @@ class Gamelaixe {
     // Kiểm tra va chạm
     checkCollision() {
         let carRect = this.car.getBoundingClientRect(); //getBoundingClientRect là một phương thức của DOM, trả về thông tin về kích thước và vị trí của phần tử trên màn hình.
-        let buffer = 10; // Cho phép sai số 5px
+        let buffer = 10; // Cho phép sai số 10px
         for (let obs of this.obstacles) {
             let obsRect = obs.getBoundingClientRect();
             if (

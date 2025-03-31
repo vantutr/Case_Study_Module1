@@ -9,10 +9,11 @@ class AudioManager {
             this.playMusic();
         }
 
-        // Gán sự kiện cho tất cả nút có class "musicOnOff"
-        document.querySelectorAll(".musicOnOff").forEach(button => {
-            button.onclick = () => this.toggleSound();
-        });
+        // Gán sự kiện cho nút bật/tắt âm thanh bằng ID
+        let soundButton = document.getElementById("on_off");
+        if (soundButton) {
+            soundButton.onclick = () => this.toggleSound();
+        }
     }
 
     playMusic() {
@@ -33,9 +34,11 @@ class AudioManager {
             this.audio.pause();
             this.audio.currentTime = 0; // Reset bài hát
             localStorage.setItem("sound", "off");
+            document.getElementById("on_off").innerHTML = "<i class=\"fa-solid fa-volume-high\"></i> Bật âm thanh";
         } else {
             this.playMusic();
             localStorage.setItem("sound", "on");
+            document.getElementById("on_off").innerHTML = "<i class=\"fa-solid fa-volume-xmark\"></i> Tắt âm thanh";
         }
         this.isSoundOn = !this.isSoundOn;
     }
@@ -44,7 +47,3 @@ class AudioManager {
 // Khởi tạo lớp quản lý âm thanh
 const audioManager = new AudioManager("music.mp3");
 
-// Khi bấm nút "Bắt đầu", chuyển sang trang game
-document.getElementById("start").onclick = function() {
-    window.location.href = "index.html";
-};

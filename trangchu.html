@@ -114,7 +114,7 @@
             font-size: 26px;
             font-weight: bold;
             color: #f41717;
-            text-shadow: 0 0 10px #f41717, 0 0 20px #f41717;
+            text-shadow: 0 0 10px  #f41717, 0 0 20px #f41717;
             animation: glow 1.5s infinite alternate;
             transition: top 0.5s ease, transform 0.5s ease;
             white-space: nowrap; /* Giữ chữ trên một dòng */
@@ -136,7 +136,7 @@
                 text-shadow: 0 0 5px #f41717;
             }
             100% {
-                text-shadow: 0 0 15px #f41717;
+                text-shadow: 20px 20px 20px 25px#f41717;
             }
         }
 
@@ -148,6 +148,7 @@
             flex-direction: column;
             gap: 20px;
             width: 70%;
+            padding-top: 40px;
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.5s ease, transform 0.5s ease;
@@ -164,7 +165,7 @@
             flex-direction: column;
             gap: 10px;
             width: 100%;
-            padding-top: 30px;
+            /*padding-top: 30px;*/
         }
 
         .mode-btn {
@@ -217,16 +218,84 @@
             box-shadow: 0 0 20px #ff2770, 0 0 40px #f41717;
             transform: scale(1.05); /* Tăng nhẹ kích thước khi hover */
         }
-        .musicOnOff {
-            width: 50%;
-            margin-top: 5px;
+        .music_instruct {
+            display: flex;
+            justify-content: space-between; /* Canh hai bên */
+            align-items: center;
+            width: 100%;
             padding: 5px;
+        }
+
+
+        .musicOnOff {
+            width: 45%;
+            padding: 5px 10px;
             font-size: 12px;
             font-weight: bold;
             border: 2px solid #45f3ff;
             border-radius: 30px;
             cursor: pointer;
         }
+
+        .instruct {
+            width: 45%;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #45f3ff;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+
+        /* Form hướng dẫn */
+        .form_instruct {
+            font-family: arial, sans-serif;
+            display: none; /* Mặc định ẩn */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            background: #2d2d39;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            text-align: center;
+        }
+        /*.form_instruct h2{*/
+        /*    font-size: 24px;*/
+        /*    color: #f41717;*/
+        /*}*/
+
+        .instruction_content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form_instruct button {
+            width: 100px;
+            padding: 10px;
+            background: #45f3ff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            color: black;
+            cursor: pointer;
+            margin-top: 15px; /* Tạo khoảng cách giữa nội dung và nút */
+            display: block;
+            margin-left: auto;
+            margin-right: auto; /* Căn giữa */
+        }
+
+        .form_instruct button:hover {
+            background: #f41717;
+            color: white;
+        }
+
 
     </style>
 </head>
@@ -241,8 +310,19 @@
             </div>
             <input type="submit" id="start" value="Bắt Đầu" />
 <!--            <button class="musicOnOff"><i class="fa-solid fa-volume-high"></i> Bật âm thanh</button>-->
-            <button class="musicOnOff"><i class="fa-solid fa-volume-xmark"></i> Tắt âm thanh</button>
+            <div class="music_instruct">
+                <button class="musicOnOff" id="on_off"><i class="fa-solid fa-volume-xmark"></i> Tắt âm thanh</button>
+                <button class="instruct" id="inst" onclick="displayinst()">Hướng dẫn</button>
+            </div>
         </div>
+    </div>
+</div>
+
+<div class="form_instruct" id="instructionForm">
+    <div class="instruction_content">
+        <h2>Hướng Dẫn Trò Chơi</h2>
+        <p id="display_instruct"></p>
+        <button onclick="closeInstruction()">Đã Hiểu</button>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
@@ -259,6 +339,37 @@ var buttons = document.getElementsByClassName("mode-btn");
             this.classList.add("active");
         };
     }
+
+function displayinst() {
+    document.getElementById('display_instruct').innerHTML =
+        "<strong>🎯 Mục Tiêu:</strong><br>" +
+        "Lái xe thật khéo léo, né tránh chướng ngại vật và đạt điểm số cao nhất có thể!<br><br>" +
+        "<strong>🚦 Cách Điều Khiển:</strong><br>" +
+        "- Sang trái: Phím Mũi Tên Trái ⬅<br>" +
+        "- Sang phải: Phím Mũi Tên Phải ➡<br>" +
+        "- Lên trên: Phím Mũi Tên Lên ⬆<br>" +
+        "- Xuống dưới: Phím Mũi Tên Xuống ⬇<br><br>" +
+        "<strong>⚠️ Luật Chơi:</strong><br>" +
+        "- Xe có thể di chuyển tự do trên đường.<br>" +
+        "- Tránh các chướng ngại vật.<br>" +
+        "- Nếu va chạm, trò chơi kết thúc!<br><br>" +
+        "<strong>🎮 Chế Độ Chơi:</strong><br>" +
+        "🟢 Dễ: Tốc độ chậm, ít chướng ngại vật.<br>" +
+        "🟡 Trung Bình: Tốc độ vừa, nhiều chướng ngại vật hơn.<br>" +
+        "🔴 Khó: Tốc độ nhanh, nhiều chướng ngại vật.";
+
+    // Hiển thị form hướng dẫn
+    document.getElementById('instructionForm').style.display = "block";
+}
+
+function closeInstruction() {
+    document.getElementById('instructionForm').style.display = "none";
+}
+// Khi bấm nút "Bắt đầu", chuyển sang trang game
+document.getElementById("start").onclick = function() {
+    window.location.href = "index.html";
+};
+
 </script>
 </body>
 </html>

@@ -33,6 +33,17 @@
             0% { background-position: 0 0; }  /* Ảnh nền bắt đầu ở vị trí (0,0) */
             100% { background-position: 0 100%; }  /* Ảnh nền di chuyển xuống (0,100vh) */
         }
+        h1 {
+            margin-bottom: 5px; /* Giảm khoảng cách giữa h1 và score-container */
+        }
+
+        .score-container {
+            margin-top: 0;
+            padding-top: 0;
+            display: flex; /* Đưa các phần tử con nằm trên cùng 1 hàng */
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            gap: 20px; /* Tạo khoảng cách giữa các phần tử */
+        }
         .car-image {
             position: absolute;
             width: 50px;
@@ -64,14 +75,19 @@
     </style>
 </head>
 <body>
-    <h1>Game Lái Xe</h1>
-    <p>Score: <span id="score">0</span></p>
+    <h1>Racing Game</h1>
+    <div class="score-container">
+        <p>Score: <span id="score">0</span></p>
+        <p>Max Score: <span id="high-score">0</span></p>
+    </div>
     <button id="start">Bắt Đầu</button>
+    <button><a href="trangchu.html">Về Trang Chủ</a></button>
     <div id="gameContainer">
         <img id="car" class="car-image" src="car1.png">
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
     <script src="gamelaixe.js"></script>
     <script src="main.js"></script>
+<!--    <script src="audioManager.js"></script>-->
 </body>
 </html>
