@@ -265,10 +265,6 @@
             z-index: 1000;
             text-align: center;
         }
-        /*.form_instruct h2{*/
-        /*    font-size: 24px;*/
-        /*    color: #f41717;*/
-        /*}*/
 
         .instruction_content {
             display: flex;
@@ -304,12 +300,12 @@
     <div class="form">
         <div class="formBx">
             <div class="mode-selection">
-                <button class="mode-btn" data-mode="easy">Dễ</button>
-                <button class="mode-btn" data-mode="medium">Trung Bình</button>
-                <button class="mode-btn" data-mode="hard">Khó</button>
+                <button class="mode-btn" id="easy" >Dễ</button>
+                <button class="mode-btn" id="normal" >Trung Bình</button>
+                <button class="mode-btn" id="hard" >Khó</button>
             </div>
-            <input type="submit" id="start" value="Bắt Đầu" />
-<!--            <button class="musicOnOff"><i class="fa-solid fa-volume-high"></i> Bật âm thanh</button>-->
+            <input type="submit" id="start" value="Bắt Đầu" onclick="startGame()" />
+
             <div class="music_instruct">
                 <button class="musicOnOff" id="on_off"><i class="fa-solid fa-volume-xmark"></i> Tắt âm thanh</button>
                 <button class="instruct" id="inst" onclick="displayinst()">Hướng dẫn</button>
@@ -365,10 +361,31 @@ function displayinst() {
 function closeInstruction() {
     document.getElementById('instructionForm').style.display = "none";
 }
-// Khi bấm nút "Bắt đầu", chuyển sang trang game
-document.getElementById("start").onclick = function() {
-    window.location.href = "index.html";
-};
+
+function startGame() {
+    var selectedMode = "";
+
+    if (document.getElementById("easy").classList.contains("active")) {
+        selectedMode = "easy";
+    } else if (document.getElementById("normal").classList.contains("active")) {
+        selectedMode = "normal";
+    } else if (document.getElementById("hard").classList.contains("active")) {
+        selectedMode = "hard";
+    }
+
+    if (selectedMode) {
+        localStorage.setItem("gameMode", selectedMode);
+        window.location.href = "index.html";
+    } else {
+        alert("Vui lòng chọn chế độ chơi trước khi bắt đầu!");
+    }
+}
+
+
+// // Khi bấm nút "Bắt đầu", chuyển sang trang game
+// document.getElementById("start").onclick = function() {
+//     window.location.href = "index.html";
+// };
 
 </script>
 </body>

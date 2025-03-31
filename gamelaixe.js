@@ -3,10 +3,15 @@ class Gamelaixe {
         this.gameContainer = document.getElementById("gameContainer");
         this.startButton = document.getElementById("start");
         this.scoreElement = document.getElementById("score");
+        this.maxScoreElement = document.getElementById("max-score");
+
+        this.gameMode = localStorage.getItem("gameMode") || "normal";
 
         this.score = 0;          // Điểm số ban đầu của người chơi
+        this.maxScore = localStorage.getItem("maxScore") || 0; // Lấy điểm cao nhất từ Local Storage
+        this.maxScoreElement.innerText = this.maxScore; // Hiển thị điểm cao nhất khi vào game
         this.obstacles = [];     // Danh sách các vật cản trên đường
-        this.gameSpeed = 2;      // Tốc độ di chuyển của vật cản
+        this.gameSpeed = 0;      // Tốc độ di chuyển của vật cản
         this.carX = 0;           // Tọa độ ngang của xe
         this.carY = 0;           // Tọa độ dọc của xe
         this.keys = {};          // Đối tượng lưu trạng thái phím bấm
@@ -41,6 +46,26 @@ class Gamelaixe {
     // Hàm bắt đầu game
     startGame() {
         if (this.gameRunning) return;
+
+        // Xác định tốc độ và số lượng vật cản dựa trên chế độ chơi
+        switch (this.gameMode) {
+            case "easy":
+                this.gameSpeed = 2;
+                this.obstacleSpawnRate = 0.02; // Ít vật cản hơn
+                this.pixel = 2;
+                break;
+            case "normal":
+                this.gameSpeed = 3;
+                this.obstacleSpawnRate = 0.03;
+                this.pixel = 2;
+                break;
+            case "hard":
+                this.gameSpeed = 4;
+                this.obstacleSpawnRate = 0.04; // Nhiều vật cản hơn
+                this.pixel = 3;
+                break;
+        }
+
         this.car = document.getElementById("car");
         this.gameRunning = true;
         this.startButton.style.display = "none";
@@ -82,10 +107,10 @@ class Gamelaixe {
         const maxX = this.gameContainer.clientWidth - this.car.clientWidth;
         const maxY = this.gameContainer.clientHeight - this.car.clientHeight;
 
-        if (this.keys["ArrowLeft"]) this.carX = Math.max(0, this.carX - 2);
-        if (this.keys["ArrowRight"]) this.carX = Math.min(maxX, this.carX + 2);
-        if (this.keys["ArrowUp"]) this.carY = Math.max(0, this.carY - 2);
-        if (this.keys["ArrowDown"]) this.carY = Math.min(maxY, this.carY + 2);
+        if (this.keys["ArrowLeft"]) this.carX = Math.max(0, this.carX -  this.pixel);
+        if (this.keys["ArrowRight"]) this.carX = Math.min(maxX, this.carX +  this.pixel);
+        if (this.keys["ArrowUp"]) this.carY = Math.max(0, this.carY -  this.pixel);
+        if (this.keys["ArrowDown"]) this.carY = Math.min(maxY, this.carY +  this.pixel);
 
         this.updateCarPosition();
     }
@@ -98,7 +123,7 @@ class Gamelaixe {
 
     // Tạo chướng ngại vật
     spawnObstacles() {
-        if (Math.random() < 0.02) { // Xác suất tạo vật cản (2%)
+        if (Math.random() < this.obstacleSpawnRate) {
             let maxAttempts = 10; // Số lần thử tìm vị trí hợp lệ
             let positionValid = false;
             let newLeft;
@@ -175,6 +200,13 @@ class Gamelaixe {
         this.gameRunning = false;
         this.engineSound.stop(); // Dừng âm thanh động cơ
         this.crashSound.play(); // Phát âm thanh va chạm
+
+        // Kiểm tra nếu điểm hiện tại cao hơn max-score
+        if (this.score > this.maxScore) {
+            this.maxScore = this.score;
+            this.maxScoreElement.innerText = this.maxScore;
+            localStorage.setItem("maxScore", this.maxScore); // Lưu vào Local Storage
+        }
 
         // Hiển thị thông báo game over và điểm số
         alert("Game Over! Score: " + this.score);
