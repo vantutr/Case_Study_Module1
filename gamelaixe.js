@@ -7,7 +7,7 @@ class Gamelaixe {
         this.gameMode = localStorage.getItem("gameMode") || "normal";
 
         this.score = 0;          // Điểm số ban đầu của người chơi
-        this.maxScore = localStorage.getItem("maxScore") || 0; // Lấy điểm cao nhất từ Local Storage
+        this.maxScore = localStorage.getItem(`maxScore_${this.gameMode}`) || 0;  // Lấy maxScore theo chế độ chơi
         this.maxScoreElement.innerText = this.maxScore; // Hiển thị điểm cao nhất khi vào game
         this.obstacles = [];     // Danh sách các vật cản trên đường
         this.gameSpeed = 0;      // Tốc độ di chuyển của vật cản
@@ -201,11 +201,14 @@ class Gamelaixe {
         this.engineSound.stop(); // Dừng âm thanh động cơ
         this.crashSound.play(); // Phát âm thanh va chạm
 
-        // Kiểm tra nếu điểm hiện tại cao hơn max-score
-        if (this.score > this.maxScore) {
+        // Lấy maxScore của chế độ hiện tại
+        let currentMaxScore = localStorage.getItem(`maxScore_${this.gameMode}`) || 0;
+
+        // Nếu điểm hiện tại cao hơn, cập nhật maxScore
+        if (this.score > currentMaxScore) {
             this.maxScore = this.score;
             this.maxScoreElement.innerText = this.maxScore;
-            localStorage.setItem("maxScore", this.maxScore); // Lưu vào Local Storage
+            localStorage.setItem(`maxScore_${this.gameMode}`, this.maxScore); // Lưu maxScore theo chế độ
         }
 
         // Hiển thị thông báo game over và điểm số
