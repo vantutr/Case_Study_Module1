@@ -4,7 +4,6 @@ class Gamelaixe {
         this.startButton = document.getElementById("start");
         this.scoreElement = document.getElementById("score");
         this.maxScoreElement = document.getElementById("max-score");
-
         this.gameMode = localStorage.getItem("gameMode") || "normal";
 
         this.score = 0;          // Điểm số ban đầu của người chơi
@@ -86,6 +85,7 @@ class Gamelaixe {
         this.updateCarPosition();
 
         this.engineSound.play(); // Bắt đầu phát âm thanh động cơ
+        this.crashSound.stop();
         requestAnimationFrame(() => this.update());
     }
 

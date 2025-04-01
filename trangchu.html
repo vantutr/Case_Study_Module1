@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
-<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
@@ -165,7 +163,6 @@
             flex-direction: column;
             gap: 10px;
             width: 100%;
-            /*padding-top: 30px;*/
         }
 
         .mode-btn {
@@ -201,12 +198,12 @@
 
         input[type="submit"] {
             width: 100%;
-            padding: 15px 20px; /* Tăng padding */
+            padding: 15px 20px;
             font-size: 1.2em; /* Tăng kích thước chữ */
             font-weight: bold;
             background: linear-gradient(45deg, #ff2770, #f41717); /* Hiệu ứng gradient */
             border: none;
-            border-radius: 40px; /* Bo góc nhiều hơn */
+            border-radius: 40px;
             color: white;
             cursor: pointer;
             transition: 0.3s;
@@ -281,7 +278,7 @@
             border-radius: 5px;
             color: black;
             cursor: pointer;
-            margin-top: 15px; /* Tạo khoảng cách giữa nội dung và nút */
+            margin-top: 15px;
             display: block;
             margin-left: auto;
             margin-right: auto; /* Căn giữa */
@@ -330,7 +327,7 @@ var buttons = document.getElementsByClassName("mode-btn");
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].onclick = function() {
             for (var j = 0; j < buttons.length; j++) {
-                buttons[j].classList.remove("active");
+                buttons[j].classList.remove("active"); //.classList: dùng để thao tác với danh sách các lớp (class) của một phần tử HTML.
             }
             this.classList.add("active");
         };
@@ -365,7 +362,7 @@ function closeInstruction() {
 function startGame() {
     var selectedMode = "";
 
-    if (document.getElementById("easy").classList.contains("active")) {
+    if (document.getElementById("easy").classList.contains("active")) {   //classList.contains("active") kiểm tra xem phần tử có chứa class "active" hay không
         selectedMode = "easy";
     } else if (document.getElementById("normal").classList.contains("active")) {
         selectedMode = "normal";
@@ -374,18 +371,12 @@ function startGame() {
     }
 
     if (selectedMode) {
-        localStorage.setItem("gameMode", selectedMode);
-        window.location.href = "index.html";
+        localStorage.setItem("gameMode", selectedMode); //lưu giá trị selectedMode vào Local Storage của trình duyệt.
+        window.location.href = "index.html";  //điều hướng sang trang index
     } else {
         alert("Vui lòng chọn chế độ chơi trước khi bắt đầu!");
     }
 }
-
-
-// // Khi bấm nút "Bắt đầu", chuyển sang trang game
-// document.getElementById("start").onclick = function() {
-//     window.location.href = "index.html";
-// };
 
 </script>
 </body>
